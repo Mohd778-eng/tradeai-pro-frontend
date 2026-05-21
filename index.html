@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>TradeAI Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2em;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .balance-card p {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .balance-card h2 {
+            font-size: 2.5em;
+            margin: 10px 0;
+        }
+
+        .balance-card .currency {
+            font-size: 1.2em;
+        }
+
+        .plans {
+            margin-bottom: 20px;
+        }
+
+        .plan-title {
+            color: white;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .plan {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .plan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .plan h3 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .plan-details {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .plan-details div {
+            margin: 8px 0;
+        }
+
+        .icon {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .actions {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .action-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .action-btn {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .action-btn button {
+            padding: 12px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .stats {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .footer {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .footer .status {
+            margin: 10px 0;
+        }
+
+        .status-ok {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .balance-card h2 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>💰 TradeAI Pro</h1>
+            <p>منصة تداول ذكية بعوائد يومية</p>
+        </div>
+
+        <!-- Balance Card -->
+        <div class="balance-card">
+            <p>رصيدك الحالي</p>
+            <h2>$<span id="balance">0.00</span></h2>
+            <p class="currency">USDT</p>
+        </div>
+
+        <!-- Investment Plans -->
+        <div class="plans">
+            <div class="plan-title">📊 خطط الاستثمار</div>
+
+            <!-- Plan 1 -->
+            <div class="plan" onclick="selectPlan('daily')">
+                <h3>📅 يومي <span class="icon">→</span></h3>
+                <div class="plan-details">
+                    <div>💰 الحد الأدنى: $50 USDT</div>
+                    <div>📈 العائد: 0.3% - 0.8% يومياً</div>
+                    <div>🎯 العمولة: 15%</div>
+                    <div>⏱️ التوزيع: كل يوم</div>
+                </div>
+                <button class="btn btn-primary">اختر هذه الخطة</button>
+            </div>
+
+            <!-- Plan 2 -->
+            <div class="plan" onclick="selectPlan('weekly')">
+                <h3>📆 أسبوعي <span class="icon">→</span></h3>
+                <div class="plan-details">
+                    <div>💰 الحد الأدنى: $100 USDT</div>
+                    <div>📈 العائد: 1.5% - 3% أسبوعياً</div>
+                    <div>🎯 العمولة: 20%</div>
+                    <div>⏱️ التوزيع: كل أسبوع</div>
+                </div>
+                <button class="btn btn-primary">اختر هذه الخطة</button>
+            </div>
+
+            <!-- Plan 3 -->
+            <div class="plan" onclick="selectPlan('monthly')">
+                <h3>📌 شهري <span class="icon">→</span></h3>
+                <div class="plan-details">
+                    <div>💰 الحد الأدنى: $500 USDT</div>
+                    <div>📈 العائد: 5% - 10% شهرياً</div>
+                    <div>🎯 العمولة: 25%</div>
+                    <div>⏱️ التوزيع: كل شهر</div>
+                </div>
+                <button class="btn btn-primary">اختر هذه الخطة</button>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <div class="action-title">⚡ الإجراءات السريعة</div>
+            <div class="action-btn">
+                <button onclick="investNow()">💸 استثمر الآن</button>
+                <button onclick="withdrawMoney()">📤 اسحب أموالك</button>
+            </div>
+            <button class="btn btn-secondary" onclick="checkBalance()">🔄 تحديث الرصيد</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-label">إجمالي المستثمرات</span>
+                <span class="stat-value">$<span id="totalInvested">0.00</span></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">إجمالي الأرباح</span>
+                <span class="stat-value" style="color: #4caf50;">+$<span id="totalProfit">0.00</span></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">العمولات المدفوعة</span>
+                <span class="stat-value" style="color: #ff9800;">$<span id="totalCommission">0.00</span></span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="status">
+                <span class="status-ok">✅ Backend متصل</span>
+            </div>
+            <div class="status">
+                <span class="status-ok">✅ Database متصل</span>
+            </div>
+            <div class="status">
+                <span class="status-ok">✅ Bot فعال</span>
+            </div>
+            <p style="margin-top: 15px;">
+                نسخة 1.0 | جميع الحقوق محفوظة © 2024
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Get Telegram User
+        const tg = window.Telegram?.WebApp;
+        let userId = tg?.initData ? new URLSearchParams(tg.initData).get('user') : '123456789';
+
+        // API Base URL
+        const API_BASE = 'https://tradeai-pro-backend.vercel.app';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            if (tg) tg.expand();
+            loadUserData();
+        });
+
+        // Load User Data
+        async function loadUserData() {
+            try {
+                const response = await fetch(`${API_BASE}/api/user/${userId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    updateUI(data.user);
+                }
+            } catch (error) {
+                console.log('Error loading data:', error);
+            }
+        }
+
+        // Update UI
+        function updateUI(user) {
+            document.getElementById('balance').textContent = (user.totalProfit || 0).toFixed(2);
+            document.getElementById('totalInvested').textContent = (user.totalDeposited || 0).toFixed(2);
+            document.getElementById('totalProfit').textContent = (user.totalProfit || 0).toFixed(2);
+            document.getElementById('totalCommission').textContent = (user.totalCommissionPaid || 0).toFixed(2);
+        }
+
+        // Select Plan
+        function selectPlan(planType) {
+            const amount = prompt(`أدخل المبلغ المراد استثماره ($):\n(الحد الأدنى: ${planType === 'daily' ? 50 : planType === 'weekly' ? 100 : 500})`);
+            if (amount) investAmount(planType, amount);
+        }
+
+        // Invest
+        async function investAmount(period, amount) {
+            try {
+                const response = await fetch(`${API_BASE}/api/invest`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        telegramId: userId,
+                        username: 'user',
+                        amount: parseFloat(amount),
+                        period: period,
+                        riskLevel: 'medium'
+                    })
+                });
+                if (response.ok) {
+                    alert('✅ تم الاستثمار بنجاح!');
+                    loadUserData();
+                } else {
+                    alert('❌ حدث خطأ!');
+                }
+            } catch (error) {
+                alert('❌ خطأ في الاتصال: ' + error.message);
+            }
+        }
+
+        // Quick Actions
+        function investNow() {
+            selectPlan('daily');
+        }
+
+        function withdrawMoney() {
+            const amount = prompt('أدخل المبلغ المراد سحبه ($):');
+            if (amount) {
+                fetch(`${API_BASE}/api/withdraw`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        telegramId: userId,
+                        amount: parseFloat(amount)
+                    })
+                }).then(() => {
+                    alert('✅ تم إرسال طلب السحب!');
+                    loadUserData();
+                }).catch(error => alert('❌ خطأ: ' + error.message));
+            }
+        }
+
+        function checkBalance() {
+            loadUserData();
+            alert('✅ تم تحديث الرصيد!');
+        }
+    </script>
+</body>
+</html>
